@@ -29,9 +29,9 @@ function mapHttpStatusToCode(status: number): ErrorCode {
 
 function isRetryable(code: ErrorCode, httpStatus?: number): boolean {
   if (code === ErrorCodes.NETWORK) return true;
-  if (code === ErrorCodes.TIMEOUT) return true;
+  if (code === ErrorCodes.TIMEOUT) return false;
   if (code === ErrorCodes.SERVER) return true;
-  if (code === ErrorCodes.RATE_LIMITED) return true;
+  if (code === ErrorCodes.RATE_LIMITED) return false;
 
   // Treat some transient 408-like cases as retryable if they appear.
   if (httpStatus === 408) return true;

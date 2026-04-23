@@ -25,7 +25,7 @@ export default function SignupPage() {
       <div className="w-full max-w-sm rounded-xl border border-border bg-background p-6 shadow-sm">
         <h1 className="text-lg font-semibold">Create account</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Mock signup using ReqRes. This does not create a real account.
+          Mock signup using ReqRes. This does not create a real account, hence use the placeholder values. 
         </p>
 
         <form
@@ -82,7 +82,7 @@ export default function SignupPage() {
         <p className="mt-4 text-sm text-muted-foreground">
           Already have an account?{" "}
           <Link href="/login" className="text-primary underline underline-offset-4">
-            Sign in
+            Sign in using what is present in the placeholder. 
           </Link>
         </p>
       </div>

@@ -1,10 +1,6 @@
 /**
  * DummyJSON API paths, grouped by resource.
  *
- * Docs:
- * - https://dummyjson.com/docs/users
- * - https://dummyjson.com/docs/posts
- * - https://dummyjson.com/docs/comments
  *
  * All paths are appended to `env.dummyJsonBaseUrl` (https://dummyjson.com).
  */

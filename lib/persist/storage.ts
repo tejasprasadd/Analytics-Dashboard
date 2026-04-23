@@ -1,4 +1,4 @@
-import { CURRENT_SCHEMA_VERSION, PERSIST_KEYS } from "@/lib/persist/keys";
+import { PERSIST_KEYS } from "@/lib/persist/keys";
 
 function isClient(): boolean {
   return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
@@ -86,36 +86,4 @@ export function getStoredAuthUser<TUser>(): TUser | null {
 export function setStoredAuthUser<TUser>(user: TUser | null): void {
   if (user === null) safeRemove(PERSIST_KEYS.authUser);
   else safeSet(PERSIST_KEYS.authUser, user);
-}
-
-/**
- * Migration hook. For now, v1 has no migrations, but we keep the wiring so future
- * versions can evolve without scattering storage logic.
- */
-export function migrateIfNeeded(): void {
-  if (!isClient()) return;
-  const stored = safeGet<number>(PERSIST_KEYS.schemaVersion);
-
-  if (stored === null) {
-    safeSet(PERSIST_KEYS.schemaVersion, CURRENT_SCHEMA_VERSION);
-    return;
-  }
-
-  if (stored < CURRENT_SCHEMA_VERSION) {
-    // v1 → v2: the filters slice changed shape (OMDb fields removed, DummyJSON
-    // user/post fields added). Drop the stale blob so the store rehydrates
-    // from INITIAL_FILTERS instead of re-seeding invalid keys.
-    if (stored < 2) safeRemove(PERSIST_KEYS.filters);
-    safeSet(PERSIST_KEYS.schemaVersion, CURRENT_SCHEMA_VERSION);
-    return;
-  }
-
-  if (stored > CURRENT_SCHEMA_VERSION) {
-    // User downgraded app version; safest move is to wipe persisted keys.
-    safeRemove(PERSIST_KEYS.authToken);
-    safeRemove(PERSIST_KEYS.authUser);
-    safeRemove(PERSIST_KEYS.theme);
-    safeRemove(PERSIST_KEYS.filters);
-    safeSet(PERSIST_KEYS.schemaVersion, CURRENT_SCHEMA_VERSION);
-  }
 }

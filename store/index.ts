@@ -42,7 +42,7 @@ const preloadedState = {
   auth: hydrateAuthFromStorage(),
   theme: hydrateThemeFromStorage(),
   filters: hydrateFiltersFromStorage(),
-  // collab is not persisted
+  // collab is not persisted as it is fake data being displayed on screen. 
 };
 
 export const store = configureStore({

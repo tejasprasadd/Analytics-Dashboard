@@ -6,17 +6,17 @@ import { ErrorCodes } from "@/lib/errors/errorCodes";
 function friendlyMessage(err: unknown): string {
   if (err instanceof AppError) {
     switch (err.code) {
-      case ErrorCodes.UNAUTHORIZED:
+      case ErrorCodes.UNAUTHORIZED: //401
         return "You’re not authorized. Please sign in again.";
-      case ErrorCodes.RATE_LIMITED:
+      case ErrorCodes.RATE_LIMITED: //429
         return "Rate limited. Please wait a moment and retry.";
-      case ErrorCodes.NETWORK:
+      case ErrorCodes.NETWORK: //No connectivity / DNS / CORS / offline
         return "Network error. Check your connection and retry.";
-      case ErrorCodes.TIMEOUT:
+      case ErrorCodes.TIMEOUT: //Timeout
         return "Request timed out. Please retry.";
-      case ErrorCodes.VALIDATION:
+      case ErrorCodes.VALIDATION: //400/422
         return "Invalid input. Please adjust and retry.";
-      default:
+      default: //5xx
         return err.message || "Something went wrong.";
     }
   }

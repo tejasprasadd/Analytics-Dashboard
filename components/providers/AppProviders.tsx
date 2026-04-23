@@ -10,17 +10,12 @@ import { ReduxProvider } from "@/components/providers/ReduxProvider";
 import { ThemeBoot } from "@/components/providers/ThemeBoot";
 import { authEventBus } from "@/lib/errors/authEventBus";
 import { getQueryClient } from "@/lib/queryClient";
-import { migrateIfNeeded } from "@/lib/persist/storage";
 import { store } from "@/store";
 import { logout } from "@/store/slices/authSlice";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-
-  useEffect(() => {
-    migrateIfNeeded();
-  }, []);
 
   useEffect(() => {
     const unsub = authEventBus.subscribe((reason) => {

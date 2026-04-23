@@ -21,17 +21,17 @@ export function getQueryClient(): QueryClient {
   queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 5 * 60 * 1000,
-        gcTime: 10 * 60 * 1000,
-        refetchOnWindowFocus: true,
-        refetchOnReconnect: true,
+        staleTime: 5 * 60 * 1000,// 5 minutes is stale time means the data will be considered stale after 5 minutes.
+        gcTime: 10 * 60 * 1000,// 10 minutes is garbage collection time means the data will be garbage collected after 10 minutes.
+        refetchOnWindowFocus: true,// Refetch on window focus means the data will be refetched when the window is focused.
+        refetchOnReconnect: true,// Refetch on reconnect means the data will be refetched when the reconnect.
         networkMode: "online",
-        retry: (count, err) => {
+        retry: (count, err) => {// Retry is the function that retries the request.  
           const code = getCode(err);
           if (code === ErrorCodes.RATE_LIMITED) return false;
           return count < 2;
         },
-        retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30_000),
+        retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30_000),//Retry delay is the time to wait before retrying the request.
       },
       mutations: {
         retry: 0,
