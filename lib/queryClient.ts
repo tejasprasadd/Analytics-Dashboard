@@ -5,6 +5,12 @@ import { AppError } from "@/lib/errors/AppError";
 
 let queryClient: QueryClient | null = null;
 
+function exposeToDevtools(client: QueryClient) {
+  if (process.env.NODE_ENV === "production") return;
+  if (typeof window === "undefined") return;
+  window.__TANSTACK_QUERY_CLIENT__ = client;
+}
+
 function getCode(err: unknown): string | null {
   if (err instanceof AppError) return err.code;
   if (typeof err === "object" && err !== null) {
@@ -40,6 +46,7 @@ export function getQueryClient(): QueryClient {
     },
   });
 
+  exposeToDevtools(queryClient);
   return queryClient;
 }
 
