@@ -1,11 +1,11 @@
 "use client";
 
-import { memo, useMemo, useState } from "react";
+import { memo, useMemo, useState, lazy, Suspense, useCallback } from "react";
+import { List, type RowComponentProps } from "react-window";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ErrorState } from "@/components/errors/ErrorState";
-import { UserPostsChart } from "@/components/users/UserPostsChart";
 import { useUsersList } from "@/hooks/queries/useUsersList";
 import { useUserPosts } from "@/hooks/queries/useUserPosts";
 import { usePostComments } from "@/hooks/queries/usePostComments";
@@ -20,6 +20,10 @@ import {
 } from "@/store/slices/filtersSlice";
 import type { DummyJsonComment } from "@/types/comment.types";
 
+const UserPostsChart = lazy(() =>
+  import("@/components/users/UserPostsChart").then((m) => ({ default: m.UserPostsChart })),
+);
+
 const UsersTable = memo(function UsersTable({
   users,
   selectedUserId,
@@ -29,33 +33,42 @@ const UsersTable = memo(function UsersTable({
   selectedUserId: number | null;
   onSelect: (id: number) => void;
 }) {
+  const Row = useCallback(
+    ({ index, style }: RowComponentProps) => {
+      const u = users[index];
+      const active = selectedUserId === u.id;
+      return (
+        <div
+          style={style}
+          className={[
+            "grid cursor-pointer grid-cols-[1fr_1fr] gap-3 px-3 py-2 text-sm",
+            active ? "bg-muted" : "hover:bg-muted/60",
+          ].join(" ")}
+          onClick={() => onSelect(u.id)}
+        >
+          <div className="font-medium">{u.username}</div>
+          <div className="text-muted-foreground">{u.email}</div>
+        </div>
+      );
+    },
+    [onSelect, selectedUserId, users],
+  );
+
   return (
     <div className="rounded-xl border border-border bg-background p-4">
       <div className="text-sm font-semibold">Users</div>
-      <div className="mt-3 overflow-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-left text-muted-foreground">
-              <th className="py-2 pr-3">Username</th>
-              <th className="py-2 pr-3">Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u) => {
-              const active = selectedUserId === u.id;
-              return (
-                <tr
-                  key={u.id}
-                  className={active ? "bg-muted" : "hover:bg-muted/60"}
-                  onClick={() => onSelect(u.id)}
-                >
-                  <td className="cursor-pointer py-2 pr-3 font-medium">{u.username}</td>
-                  <td className="cursor-pointer py-2 pr-3 text-muted-foreground">{u.email}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="mt-3 overflow-hidden rounded-md border border-border">
+        <div className="grid grid-cols-[1fr_1fr] gap-3 px-3 py-2 text-xs font-medium text-muted-foreground">
+          <div>Username</div>
+          <div>Email</div>
+        </div>
+        <List
+          style={{ height: 240 }}
+          rowCount={users.length}
+          rowHeight={40}
+          rowComponent={Row}
+          rowProps={{}}
+        />
       </div>
     </div>
   );
@@ -163,6 +176,9 @@ export default function UsersPage() {
     }));
   }, [commentsByPost, posts]);
 
+  const onSelectUser = useCallback((id: number) => dispatch(selectUser(id)), [dispatch]);
+  const onSelectPost = useCallback((id: number) => dispatch(selectPost(id)), [dispatch]);
+
   return (
     <div className="space-y-4">
       <div className="rounded-xl border border-border bg-background p-4">
@@ -233,7 +249,7 @@ export default function UsersPage() {
           <UsersTable
             users={users.map((u) => ({ id: u.id, username: u.username, email: u.email }))}
             selectedUserId={filters.selectedUserId}
-            onSelect={(id) => dispatch(selectUser(id))}
+            onSelect={onSelectUser}
           />
 
           {postsQ.isLoading && filters.selectedUserId ? (
@@ -244,7 +260,7 @@ export default function UsersPage() {
             <PostsTable
               posts={postsWithCounts}
               selectedPostId={filters.selectedPostId}
-              onSelect={(id) => dispatch(selectPost(id))}
+              onSelect={onSelectPost}
             />
           )}
         </div>
@@ -264,10 +280,9 @@ export default function UsersPage() {
         )
       ) : null}
 
-      <UserPostsChart
-        postsByUser={postsQ.data ?? null}
-        commentsByPost={commentsByPost}
-      />
+      <Suspense fallback={<Skeleton className="h-[260px] w-full" />}>
+        <UserPostsChart postsByUser={postsQ.data ?? null} commentsByPost={commentsByPost} />
+      </Suspense>
     </div>
   );
 }

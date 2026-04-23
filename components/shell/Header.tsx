@@ -6,13 +6,11 @@ import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { toggleTheme } from "@/store/slices/themeSlice";
+import { useTheme } from "@/hooks/useTheme";
 import { dashboardNav, isDashboardNavActive } from "@/components/shell/Sidebar";
 
 export function Header() {
-  const dispatch = useAppDispatch();
-  const mode = useAppSelector((s) => s.theme.mode);
+  const { isDark, toggle } = useTheme();
   const { user, handleLogout } = useAuth();
   const pathname = usePathname();
 
@@ -41,10 +39,10 @@ export function Header() {
       <div className="flex items-center gap-2">
         <Button
           variant="outline"
-          onClick={() => dispatch(toggleTheme())}
+          onClick={toggle}
           aria-label="Toggle theme"
         >
-          {mode === "dark" ? "Dark" : "Light"}
+          {isDark ? "Dark" : "Light"}
         </Button>
 
         <div className="flex items-center gap-2 rounded-lg border border-input bg-background px-2 py-1.5">
