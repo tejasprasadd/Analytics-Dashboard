@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { memo } from "react";
+import { memo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -34,6 +34,7 @@ const WeatherCard = memo(function WeatherCard({
 export default function WeatherPage() {
   const dispatch = useAppDispatch();
   const query = useAppSelector((s) => s.filters.weatherQuery);
+  const [draft, setDraft] = useState(query);
   const q = useWeatherCurrent(query);
 
   const location = q.data?.location;
@@ -54,9 +55,19 @@ export default function WeatherPage() {
             <input
               className="h-9 w-72 max-w-full rounded-md border border-input bg-background px-3 text-sm outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring"
               placeholder="City or zip (e.g. Delhi, 10010)"
-              value={query}
-              onChange={(e) => dispatch(setWeatherQuery(e.target.value))}
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") dispatch(setWeatherQuery(draft));
+              }}
             />
+            <Button
+              variant="outline"
+              onClick={() => dispatch(setWeatherQuery(draft))}
+              disabled={!draft.trim()}
+            >
+              Search
+            </Button>
             <Button variant="outline" onClick={() => q.refetch()} disabled={!query.trim()}>
               Refresh
             </Button>

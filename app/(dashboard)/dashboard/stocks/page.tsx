@@ -56,9 +56,6 @@ export default function StocksPage() {
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <div className="text-sm font-semibold">Stocks</div>
-            <div className="mt-1 text-sm text-muted-foreground">
-              Cached for 60 minutes to avoid rate-limit spam.
-            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
