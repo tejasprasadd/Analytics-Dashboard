@@ -6,6 +6,8 @@ import axios, {
 
 import { normalize } from "@/lib/errors/normalize";
 import type { AppErrorUpstream } from "@/lib/errors/AppError";
+import { ErrorCodes } from "@/lib/errors/errorCodes";
+import { authEventBus } from "@/lib/errors/authEventBus";
 import { getStoredAuthToken } from "@/lib/persist/storage";
 
 export interface CreateClientOptions {
@@ -48,7 +50,6 @@ export function createClient(opts: CreateClientOptions): AxiosInstance {
     }
 
     if (process.env.NODE_ENV !== "production") {
-      // eslint-disable-next-line no-console
       console.debug(`[${opts.upstream}]`, config.method?.toUpperCase(), config.baseURL, config.url, reqId);
     }
     return config;
@@ -56,7 +57,11 @@ export function createClient(opts: CreateClientOptions): AxiosInstance {
 
   instance.interceptors.response.use(
     (response) => response,
-    (err) => Promise.reject(normalize(err, opts.upstream)),
+    (err) => {
+      const normalized = normalize(err, opts.upstream);
+      if (normalized.code === ErrorCodes.UNAUTHORIZED) authEventBus.emit("UNAUTHORIZED");
+      return Promise.reject(normalized);
+    },
   );
 
   return instance;

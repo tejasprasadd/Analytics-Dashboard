@@ -3,6 +3,7 @@ import type { Middleware } from "@reduxjs/toolkit";
 import { PERSIST_KEYS } from "@/lib/persist/keys";
 import { safeSet, setStoredAuthToken, setStoredAuthUser } from "@/lib/persist/storage";
 import { clearCookie, setCookie } from "@/lib/persist/cookie";
+import type { RootState } from "@/store";
 
 const AUTH_COOKIE_NAME = "auth-token";
 
@@ -15,7 +16,7 @@ type AnyAction = { type: string; payload?: unknown };
 export const persistMiddleware: Middleware =
   (storeApi) => (next) => (action: unknown) => {
     const result = next(action);
-    const state = storeApi.getState() as any;
+    const state = storeApi.getState() as RootState;
     const a = action as AnyAction;
 
     switch (a.type) {

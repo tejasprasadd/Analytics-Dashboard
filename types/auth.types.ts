@@ -13,8 +13,12 @@ export interface ReqResRegisterResponse {
 }
 
 export interface AuthSession {
+  id: number;
   email: string;
   token: string;
+  firstName: string;
+  lastName: string;
+  avatar: string;
 }
 
 /** Single user object returned inside ReqRes `GET /users/:id` envelope. */

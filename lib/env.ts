@@ -25,6 +25,8 @@ export const env = {
     process.env.NEXT_PUBLIC_REQRES_API_BASE_URL ?? "https://reqres.in/api",
   ),
   reqresApiKey: process.env.NEXT_PUBLIC_REQRES_API_KEY ?? "",
+
+  enableDevtools: process.env.NODE_ENV !== "production",
 };
 
 if (process.env.NODE_ENV !== "production") {
