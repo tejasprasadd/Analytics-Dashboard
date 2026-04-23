@@ -13,12 +13,12 @@ export const DUMMYJSON_ENDPOINTS = {
     list: "/users",
     search: "/users/search",
     byId: (id: number | string) => `/users/${id}`,
-    postsByUser: (id: number | string) => `/users/${id}/posts`,
   },
   posts: {
     list: "/posts",
     search: "/posts/search",
     byId: (id: number | string) => `/posts/${id}`,
+    byUser: (id: number | string) => `/posts/user/${id}`,
     commentsByPost: (id: number | string) => `/posts/${id}/comments`,
   },
   comments: {

@@ -88,7 +88,7 @@ export async function getPostsByUser(
   }
 
   const { data } = await dummyJsonClient.get<DummyJsonPostsResponse>(
-    DUMMYJSON_ENDPOINTS.users.postsByUser(userId),
+    DUMMYJSON_ENDPOINTS.posts.byUser(userId),
     { signal },
   );
   return data;
