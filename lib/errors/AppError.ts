@@ -1,6 +1,11 @@
 import type { ErrorCode } from "@/lib/errors/errorCodes";
 
-export type AppErrorUpstream = "reqres" | "omdb" | "weather" | "stocks" | "internal";
+export type AppErrorUpstream =
+  | "reqres"
+  | "dummyJson"
+  | "weather"
+  | "stocks"
+  | "internal";
 
 export class AppError extends Error {
   code: ErrorCode;

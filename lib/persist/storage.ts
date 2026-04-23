@@ -102,7 +102,10 @@ export function migrateIfNeeded(): void {
   }
 
   if (stored < CURRENT_SCHEMA_VERSION) {
-    // No migrations in v1. Future: run sequential migration functions.
+    // v1 → v2: the filters slice changed shape (OMDb fields removed, DummyJSON
+    // user/post fields added). Drop the stale blob so the store rehydrates
+    // from INITIAL_FILTERS instead of re-seeding invalid keys.
+    if (stored < 2) safeRemove(PERSIST_KEYS.filters);
     safeSet(PERSIST_KEYS.schemaVersion, CURRENT_SCHEMA_VERSION);
     return;
   }

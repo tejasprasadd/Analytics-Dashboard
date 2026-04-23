@@ -6,12 +6,10 @@ function trimTrailingSlashes(s: string): string {
   return s.replace(/\/+$/, "");
 }
 
-const omdbRaw =
-  process.env.NEXT_PUBLIC_OMDB_API_ENDPOINT ?? "https://www.omdbapi.com/";
-
 export const env = {
-  omdbBaseUrl: trimTrailingSlashes(omdbRaw),
-  omdbApiKey: process.env.NEXT_PUBLIC_OMDB_API_KEY ?? "",
+  dummyJsonBaseUrl: trimTrailingSlashes(
+    process.env.NEXT_PUBLIC_DUMMYJSON_API_BASE_URL ?? "https://dummyjson.com",
+  ),
 
   weatherApiBaseUrl: trimTrailingSlashes(
     process.env.NEXT_PUBLIC_WEATHER_API_BASE_URL ?? "https://api.weatherapi.com/v1",
@@ -30,7 +28,6 @@ export const env = {
 };
 
 if (process.env.NODE_ENV !== "production") {
-  if (!env.omdbApiKey) console.warn("[env] NEXT_PUBLIC_OMDB_API_KEY is not set");
   if (!env.weatherApiKey) console.warn("[env] NEXT_PUBLIC_WEATHER_API_KEY is not set");
   if (!env.reqresApiKey) console.warn("[env] NEXT_PUBLIC_REQRES_API_KEY is not set");
 }

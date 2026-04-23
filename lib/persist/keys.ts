@@ -6,5 +6,11 @@ export const PERSIST_KEYS = {
   schemaVersion: "dash:schemaVersion",
 } as const;
 
-export const CURRENT_SCHEMA_VERSION = 1;
+/**
+ * Bump when the shape of any persisted slice changes.
+ * v2: filters slice dropped OMDb fields (`movieQuery`, `selectedImdbId`) and
+ *     added DummyJSON fields (`userSearchQuery`, `usersPage`, `usersLimit`,
+ *     `selectedUserId`, `selectedPostId`).
+ */
+export const CURRENT_SCHEMA_VERSION = 2;
 
