@@ -49,6 +49,7 @@ export const persistMiddleware: Middleware =
       case "filters/setWeatherQuery":
       case "filters/setStocksPage":
       case "filters/setStocksLimit":
+      case "filters/setStocksQuery":
       case "filters/setUserSearchQuery":
       case "filters/setUsersPage":
       case "filters/setUsersLimit":

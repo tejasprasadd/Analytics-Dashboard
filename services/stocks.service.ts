@@ -7,6 +7,7 @@ import type { FreeApiStocksResponse } from "@/types/stock.types";
 export interface GetStocksParams {
   page?: number;
   limit?: number;
+  query?: string;
 }
 
 /**
@@ -18,6 +19,7 @@ export async function getStocks(
 ): Promise<FreeApiStocksResponse> { //Here promise is returning the FreeApiStocksResponse type.
   const page = params.page ?? 1;
   const limit = params.limit ?? 10;
+  const query = params.query?.trim() ?? "";
 
   if (page < 1 || limit < 1) {
     throw new AppError({
@@ -29,7 +31,12 @@ export async function getStocks(
   }
 
   const { data } = await stocksClient.get<FreeApiStocksResponse>(STOCKS_ENDPOINTS.list, {
-    params: { page, limit },
+    params: {
+      page,
+      limit,
+      inc: "Symbol,Name,MarketCap,CurrentPrice",
+      ...(query ? { query } : {}),
+    },
     signal,
   });
 

@@ -1,13 +1,13 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ErrorState } from "@/components/errors/ErrorState";
 import { useStocksList } from "@/hooks/queries/useStocksList";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setStocksLimit, setStocksPage } from "@/store/slices/filtersSlice";
+import { setStocksLimit, setStocksPage, setStocksQuery } from "@/store/slices/filtersSlice";
 
 const StocksTable = memo(function StocksTable({
   rows,
@@ -45,8 +45,9 @@ const StocksTable = memo(function StocksTable({
 
 export default function StocksPage() {
   const dispatch = useAppDispatch();
-  const { stocksPage: page, stocksLimit: limit } = useAppSelector((s) => s.filters);
-  const q = useStocksList({ page, limit });
+  const { stocksPage: page, stocksLimit: limit, stocksQuery } = useAppSelector((s) => s.filters);
+  const [draft, setDraft] = useState(stocksQuery);
+  const q = useStocksList({ page, limit, query: stocksQuery });
 
   const rows = q.data?.data?.data ?? [];
 
@@ -59,6 +60,22 @@ export default function StocksPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
+            <input
+              className="h-9 w-72 max-w-full rounded-md border border-input bg-background px-3 text-sm outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring"
+              placeholder="Search stocks (press Enter)"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") dispatch(setStocksQuery(draft));
+              }}
+            />
+            <Button
+              variant="outline"
+              onClick={() => dispatch(setStocksQuery(draft))}
+              disabled={!draft.trim()}
+            >
+              Search
+            </Button>
             <select
               className="h-9 rounded-md border border-input bg-background px-2 text-sm"
               value={String(limit)}

@@ -8,10 +8,11 @@ import { AppError } from "@/lib/errors/AppError";
 export function useStocksList(params: GetStocksParams) {
   const page = params.page ?? 1;
   const limit = params.limit ?? 10;
+  const query = params.query?.trim() ?? "";
 
   return useQuery({
-    queryKey: queryKeys.stocks.list(page, limit),
-    queryFn: ({ signal }) => getStocks({ page, limit }, signal),
+    queryKey: queryKeys.stocks.list(page, limit, query),
+    queryFn: ({ signal }) => getStocks({ page, limit, query }, signal),
     staleTime: 60 * 60 * 1000,
     retry: (n, err) => {
       const code = err instanceof AppError ? err.code : null;

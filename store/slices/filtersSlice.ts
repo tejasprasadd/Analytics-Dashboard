@@ -17,6 +17,7 @@ export interface FiltersState {
   // FreeAPI stocks pagination
   stocksPage: number;
   stocksLimit: number;
+  stocksQuery: string;
 
   // DummyJSON users → posts → comments chain
   userSearchQuery: string;
@@ -30,6 +31,7 @@ export const INITIAL_FILTERS: FiltersState = {
   weatherQuery: "",
   stocksPage: 1,
   stocksLimit: 10,
+  stocksQuery: "",
   userSearchQuery: "",
   usersPage: 1,
   usersLimit: 10,
@@ -49,6 +51,10 @@ const filtersSlice = createSlice({
     },
     setStocksLimit(state, action: PayloadAction<number>) {
       state.stocksLimit = action.payload;
+    },
+    setStocksQuery(state, action: PayloadAction<string>) {
+      state.stocksQuery = action.payload;
+      state.stocksPage = 1;
     },
 
     setUserSearchQuery(state, action: PayloadAction<string>) {
@@ -84,6 +90,7 @@ export const {
   setWeatherQuery,
   setStocksPage,
   setStocksLimit,
+  setStocksQuery,
   setUserSearchQuery,
   setUsersPage,
   setUsersLimit,

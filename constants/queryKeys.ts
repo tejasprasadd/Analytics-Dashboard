@@ -30,7 +30,8 @@ export const queryKeys = {
   },
   stocks: {
     root: ["stocks"] as const,
-    list: (page: number, limit: number) => ["stocks", "list", page, limit] as const,
+    list: (page: number, limit: number, query: string) =>
+      ["stocks", "list", page, limit, query] as const,
     timeSeries: (symbol: string) => ["stocks", "timeSeries", symbol] as const,
     quote: (symbol: string) => ["stocks", "quote", symbol] as const,
   },
