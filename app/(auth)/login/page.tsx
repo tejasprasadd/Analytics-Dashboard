@@ -25,7 +25,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm rounded-xl border border-border bg-background p-6 shadow-sm">
         <h1 className="text-lg font-semibold">Sign in</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Mock auth using ReqRes. No real user security is implied.LOgin using what is present in the placeholder. 
+          Mock auth using ReqRes. No real user security is implied.
         </p>
 
         <form

@@ -25,7 +25,7 @@ export default function SignupPage() {
       <div className="w-full max-w-sm rounded-xl border border-border bg-background p-6 shadow-sm">
         <h1 className="text-lg font-semibold">Create account</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Mock signup using ReqRes. This does not create a real account.Create account using what is present in the placeholder. 
+          Mock signup using ReqRes. This does not create a real account.
         </p>
 
         <form
