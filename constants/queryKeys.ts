@@ -26,9 +26,11 @@ export const queryKeys = {
   weather: {
     root: ["weather"] as const,
     byCity: (city: string) => ["weather", city] as const,
+    current: (query: string) => ["weather", "current", query] as const,
   },
   stocks: {
     root: ["stocks"] as const,
+    list: (page: number, limit: number) => ["stocks", "list", page, limit] as const,
     timeSeries: (symbol: string) => ["stocks", "timeSeries", symbol] as const,
     quote: (symbol: string) => ["stocks", "quote", symbol] as const,
   },
