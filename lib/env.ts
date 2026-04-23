@@ -27,6 +27,8 @@ export const env = {
   reqresApiKey: process.env.NEXT_PUBLIC_REQRES_API_KEY ?? "",
 
   enableDevtools: process.env.NODE_ENV !== "production",
+
+  collabSimIntervalMs: Number(process.env.NEXT_PUBLIC_COLLAB_SIM_INTERVAL_MS ?? 8_000),
 };
 
 if (process.env.NODE_ENV !== "production") {

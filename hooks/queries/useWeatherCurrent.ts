@@ -11,6 +11,8 @@ export function useWeatherCurrent(weatherQuery: string | null | undefined) {
     queryFn: ({ signal }) => getWeatherByQuery(q, signal),
     enabled: Boolean(q),
     staleTime: 15 * 60 * 1000,
+    refetchInterval: 15 * 60 * 1000,
+    refetchIntervalInBackground: true,
     retry: 1,
   });
 }
