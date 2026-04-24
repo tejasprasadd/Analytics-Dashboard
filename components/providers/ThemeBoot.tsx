@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import { useAppSelector } from "@/store/hooks";
 
+//This boots the theme for the application.
 export function ThemeBoot({ children }: { children: React.ReactNode }) {
   const mode = useAppSelector((s) => s.theme.mode);
 

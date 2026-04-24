@@ -284,6 +284,8 @@ export default function UsersPage() {
         )
       ) : null}
 
+
+      {/* Lazy loading the UserPostsChart component so that it does not block the main thread and the page loads faster. */}
       <Suspense fallback={<Skeleton className="h-[260px] w-full" />}>
         <UserPostsChart postsByUser={postsQ.data ?? null} commentsByPost={commentsByPost} />
       </Suspense>

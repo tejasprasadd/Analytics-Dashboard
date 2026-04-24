@@ -13,6 +13,8 @@ import { getQueryClient } from "@/lib/queryClient";
 import { store } from "@/store";
 import { logout } from "@/store/slices/authSlice";
 
+
+//Stacks all the providers for the application in the right order. 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();

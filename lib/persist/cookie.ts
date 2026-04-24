@@ -9,6 +9,7 @@ function isClient(): boolean {
   return typeof document !== "undefined";
 }
 
+//This function is used to set the cookie in the browser.
 export function setCookie(name: string, value: string, opts: CookieOptions = {}): void {
   if (!isClient()) return;
   const parts: string[] = [];
@@ -20,11 +21,13 @@ export function setCookie(name: string, value: string, opts: CookieOptions = {})
   document.cookie = parts.join("; ");
 }
 
+//This function is used to clear the cookie in the browser.
 export function clearCookie(name: string, opts: Pick<CookieOptions, "path"> = {}): void {
   // Max-Age=0 deletes the cookie
   setCookie(name, "", { ...opts, maxAgeSeconds: 0 });
 }
 
+//This function is used to get the cookie from the browser.
 export function getCookie(name: string): string | null {
   if (!isClient()) return null;
   const target = `${encodeURIComponent(name)}=`;

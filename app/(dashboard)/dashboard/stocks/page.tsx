@@ -47,6 +47,7 @@ export default function StocksPage() {
   const dispatch = useAppDispatch();
   const { stocksPage: page, stocksLimit: limit, stocksQuery } = useAppSelector((s) => s.filters);
   const [draft, setDraft] = useState(stocksQuery);
+  //Custom hook to fetch the stocks data.
   const q = useStocksList({ page, limit, query: stocksQuery });
 
   const rows = q.data?.data?.data ?? [];

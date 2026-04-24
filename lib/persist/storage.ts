@@ -6,6 +6,7 @@ function isClient(): boolean {
   return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
 }
 
+//This function is used to parse the JSON string into an object.
 function safeJsonParse<T>(raw: string): T | null {
   try {
     return JSON.parse(raw) as T;
@@ -14,6 +15,7 @@ function safeJsonParse<T>(raw: string): T | null {
   }
 }
 
+//This function is used to stringify the object into a JSON string.
 function safeJsonStringify(value: unknown): string | null {
   try {
     return JSON.stringify(value);
@@ -50,6 +52,7 @@ export function safeSet<T>(key: string, value: T): void {
   }
 }
 
+//This function is used to remove the item from the localStorage.
 export function safeRemove(key: string): void {
   if (!isClient()) return;
   try {
@@ -71,6 +74,7 @@ export function getStoredAuthToken(): string | null {
   }
 }
 
+//This function is used to set the auth token in the localStorage.
 export function setStoredAuthToken(token: string | null): void {
   if (!isClient()) return;
   try {
@@ -81,10 +85,12 @@ export function setStoredAuthToken(token: string | null): void {
   }
 }
 
+//This function is used to get the auth user from the localStorage.
 export function getStoredAuthUser<TUser>(): TUser | null {
   return safeGet<TUser>(PERSIST_KEYS.authUser);
 }
 
+//This function is used to set the auth user in the localStorage.
 export function setStoredAuthUser<TUser>(user: TUser | null): void {
   if (user === null) safeRemove(PERSIST_KEYS.authUser);
   else safeSet(PERSIST_KEYS.authUser, user);
