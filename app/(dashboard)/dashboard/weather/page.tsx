@@ -55,7 +55,7 @@ export default function WeatherPage() {
           <div className="flex flex-wrap items-center gap-2">
             <input
               className="h-9 w-72 max-w-full rounded-md border border-input bg-background px-3 text-sm outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring"
-              placeholder="City or zip (e.g. Delhi, 10010)"
+              placeholder="City (e.g. Delhi)"
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => {
