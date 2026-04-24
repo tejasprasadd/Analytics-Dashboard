@@ -1,5 +1,7 @@
 import { PERSIST_KEYS } from "@/lib/persist/keys";
 
+
+//Next.js is a server-side rendering framework. So we need to check if the code is running on the client side.
 function isClient(): boolean {
   return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
 }

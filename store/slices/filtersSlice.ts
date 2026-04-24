@@ -60,6 +60,7 @@ const filtersSlice = createSlice({
     setUserSearchQuery(state, action: PayloadAction<string>) {
       state.userSearchQuery = action.payload;
       // A new search starts from page 1 and drops any drill-down.
+      //Because the new search state might not contain the old user. So we need to reset the page to 1.
       state.usersPage = 1;
       state.selectedUserId = null;
       state.selectedPostId = null;

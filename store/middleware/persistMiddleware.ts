@@ -19,17 +19,19 @@ export const persistMiddleware: Middleware =
     const state = storeApi.getState() as RootState;
     const a = action as AnyAction;
 
+
+    //Cases here are derived from the actions dispatched in the app.
     switch (a.type) {
-      case "auth/loginSuccess": {
+      case "auth/loginSuccess": { 
         // Persist token + user for axios interceptor and boot hydration.
         setStoredAuthToken(state.auth.user?.token ?? null);
         setStoredAuthUser(state.auth.user);
 
-        // Cookie is used by edge middleware (optional). Keep it in sync.
+        // Cookie is used by the middleware to keep the auth token in sync.
         if (state.auth.user?.token) {
           setCookie(AUTH_COOKIE_NAME, state.auth.user.token, {
             maxAgeSeconds: 60 * 60 * 24,
-            sameSite: "Lax",
+            sameSite: "Lax", // Lax is the default sameSite value.
             path: "/",
           });
         }

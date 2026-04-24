@@ -34,7 +34,7 @@ export async function getStocks(
     params: {
       page,
       limit,
-      inc: "Symbol,Name,MarketCap,CurrentPrice",
+      inc: "Symbol,Name,MarketCap,CurrentPrice",//Hardcoded as we are displaying all of it in the table
       ...(query ? { query } : {}),
     },
     signal,

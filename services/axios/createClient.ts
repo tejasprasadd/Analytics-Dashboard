@@ -10,21 +10,21 @@ import { ErrorCodes } from "@/lib/errors/errorCodes";
 import { authEventBus } from "@/lib/errors/authEventBus";
 import { getStoredAuthToken } from "@/lib/persist/storage";
 
+/** How we want this client to behave (base URL, timeouts, auth, and which “upstream” name we use in errors). */
 export interface CreateClientOptions {
   upstream: AppErrorUpstream;
   baseURL: string;
   timeoutMs?: number;
   defaultParams?: Record<string, string | number | boolean | undefined>;
   defaultHeaders?: Record<string, string>;
-  /** If true, attach `Authorization: Bearer <token>` when a token exists in localStorage. THis is ignored as we are just mocking the auth flow using the reqres API her please*/
+  /** If true, we add a Bearer token header when a token is saved in the browser. */
   attachAuth?: boolean;
 }
 
 /**
- * Shared axios factory. **This is the single place where interceptors live.**
+ * Builds one axios client and wires up interceptors here, so all HTTP errors and auth
+ * are handled the same way across the app.
  */
-
-//ONe place for creating all axios instances and attaching interceptors.
 export function createClient(opts: CreateClientOptions): AxiosInstance {
   const instance = axios.create({
     baseURL: opts.baseURL,
@@ -33,9 +33,9 @@ export function createClient(opts: CreateClientOptions): AxiosInstance {
     headers: { "Content-Type": "application/json", ...opts.defaultHeaders },
   });
 
-  //An Axios request interceptor that generates a request ID and attaches it to the config.
-  //Request id is a small correlation token that is attached with each HTTP call.
+  // Runs before each request. `config` is axios’s one-request recipe (url, method, headers, body…).
   instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    // Tiny id for this one call, so logs and support can follow a single request.
     const reqId =
       globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(16).slice(2)}`;
     (config as InternalAxiosRequestConfig & { __reqId?: string }).__reqId = reqId;
@@ -55,6 +55,7 @@ export function createClient(opts: CreateClientOptions): AxiosInstance {
     return config;
   });
 
+  // On success, pass the response through. On failure, turn the error into our app shape and maybe signal logout.
   instance.interceptors.response.use(
     (response) => response,
     (err) => {

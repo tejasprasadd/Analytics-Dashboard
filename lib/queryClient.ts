@@ -31,7 +31,7 @@ export function getQueryClient(): QueryClient {
         gcTime: 10 * 60 * 1000,// 10 minutes is garbage collection time means the data will be garbage collected after 10 minutes.
         refetchOnWindowFocus: true,// Refetch on window focus means the data will be refetched when the window is focused.
         refetchOnReconnect: true,// Refetch on reconnect means the data will be refetched when the reconnect.
-        networkMode: "online",
+        networkMode: "online",//Queries do not fire when offline.
         retry: (count, err) => {// Retry is the function that retries the request.  
           const code = getCode(err);
           if (code === ErrorCodes.RATE_LIMITED) return false;

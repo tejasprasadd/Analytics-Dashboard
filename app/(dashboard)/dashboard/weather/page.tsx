@@ -16,6 +16,7 @@ function iconUrl(raw: string): string {
   return raw;
 }
 
+//React memo memoizing the card component so that it does not re-render when the props are the same.
 const WeatherCard = memo(function WeatherCard({
   title,
   value,
