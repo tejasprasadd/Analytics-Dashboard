@@ -5,7 +5,6 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { ErrorBoundary } from "@/components/errors/ErrorBoundary";
 import { Header } from "@/components/shell/Header";
-import { useAuthToast } from "@/hooks/useAuthToast";
 import { useCollabActivity } from "@/hooks/realtime/useCollabActivity";
 import { useAppSelector } from "@/store/hooks";
 
@@ -15,7 +14,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const isAuthenticated = useAppSelector((s) => s.auth.isAuthenticated);
 
   useCollabActivity();
-  useAuthToast();
 
   useEffect(() => {
     if (!isAuthenticated) {

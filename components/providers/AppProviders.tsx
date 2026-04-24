@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ToastProvider } from "@/components/ui/toast";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import { ReduxProvider } from "@/components/providers/ReduxProvider";
 import { ThemeBoot } from "@/components/providers/ThemeBoot";
@@ -35,9 +34,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     <ReduxProvider>
       <QueryProvider>
         <ThemeBoot>
-          <ToastProvider>
-            <TooltipProvider>{children}</TooltipProvider>
-          </ToastProvider>
+          <TooltipProvider>{children}</TooltipProvider>
         </ThemeBoot>
       </QueryProvider>
     </ReduxProvider>
