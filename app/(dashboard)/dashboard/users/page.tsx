@@ -33,6 +33,7 @@ const UsersTable = memo(function UsersTable({
   selectedUserId: number | null;
   onSelect: (id: number) => void;
 }) {
+  //Only re-renders when the selected user changes or the users list changes.
   const Row = useCallback(
     ({ index, style }: RowComponentProps) => {
       const u = users[index];
@@ -176,6 +177,7 @@ export default function UsersPage() {
     }));
   }, [commentsByPost, posts]);
 
+  //Prevents re-rendering of the component when the props are the same.
   const onSelectUser = useCallback((id: number) => dispatch(selectUser(id)), [dispatch]);
   const onSelectPost = useCallback((id: number) => dispatch(selectPost(id)), [dispatch]);
 
