@@ -3,6 +3,8 @@
 import { AppError } from "@/lib/errors/AppError";
 import { ErrorCodes } from "@/lib/errors/errorCodes";
 
+
+//This function is used to convert the error to a friendly message.
 function friendlyMessage(err: unknown): string {
   if (err instanceof AppError) {
     switch (err.code) {
@@ -23,6 +25,7 @@ function friendlyMessage(err: unknown): string {
   return err instanceof Error ? err.message : "Something went wrong.";
 }
 
+//This component is used to display the error state.
 export function ErrorState({
   title = "Couldn’t load data",
   error,

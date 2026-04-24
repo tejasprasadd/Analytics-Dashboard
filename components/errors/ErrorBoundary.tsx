@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+//Catches Rendering errors.
 export class ErrorBoundary extends React.Component<
   { children: React.ReactNode; fallback?: React.ReactNode },
   { hasError: boolean; error?: Error }
