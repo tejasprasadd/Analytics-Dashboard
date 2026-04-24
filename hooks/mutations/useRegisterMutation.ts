@@ -5,6 +5,8 @@ import type { AppError } from "@/lib/errors/AppError";
 import { useAppDispatch } from "@/store/hooks";
 import { loginFailure, loginStart, loginSuccess } from "@/store/slices/authSlice";
 
+//Mutation is used here because it is used to call the register service, 
+// and it is a side effect and the tanstack query library is used to handle the caching and the invalidation of the data.
 export function useRegisterMutation() {
   const dispatch = useAppDispatch();
 
@@ -17,7 +19,7 @@ export function useRegisterMutation() {
 
       // ReqRes register returns { id, token } but doesn't create a real user profile.
       // Keep it deterministic by fetching an existing demo profile.
-      const profile = await getUserProfile(2);
+      const profile = await getUserProfile(2);// ReqRes is a mock api, so we are hard coding the user id to 2.
 
       dispatch(
         loginSuccess({
