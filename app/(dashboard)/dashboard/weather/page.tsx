@@ -36,6 +36,7 @@ export default function WeatherPage() {
   const dispatch = useAppDispatch();
   const query = useAppSelector((s) => s.filters.weatherQuery);
   const [draft, setDraft] = useState(query);
+  //Custom hook to fetch the weather data.
   const q = useWeatherCurrent(query);
 
   const location = q.data?.location;

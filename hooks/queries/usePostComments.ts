@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { getCommentsByPost } from "@/services/posts.service";
 
-// A custom hook that fetches the comments for a given post.
+// Custom hook to fetch the comments for a given post.
 export function usePostComments(postId: number | null) {
   return useQuery({
     queryKey: [...queryKeys.comments.root, "byPost", postId] as const,

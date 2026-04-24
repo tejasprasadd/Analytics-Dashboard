@@ -151,6 +151,8 @@ export default function UsersPage() {
   const filters = useAppSelector((s) => s.filters);
   const [draft, setDraft] = useState(filters.userSearchQuery);
 
+
+  //Custom hooks to fetch the users, posts and comments data.
   const usersQ = useUsersList({
     q: filters.userSearchQuery,
     page: filters.usersPage,

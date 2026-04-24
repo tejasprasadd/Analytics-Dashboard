@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { getUsers, type ListUsersParams } from "@/services/users.service";
 
-// A custom hook that fetches the users list.
+// Custom hook to fetch the users list.
 export function useUsersList(params: ListUsersParams) {
   const q = params.q?.trim() ?? "";
   const page = params.page ?? 1;
