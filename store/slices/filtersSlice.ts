@@ -45,20 +45,25 @@ const filtersSlice = createSlice({
   name: "filters",
   initialState: INITIAL_FILTERS,
   reducers: {
+    //Sets the weather query.
     setWeatherQuery(state, action: PayloadAction<string>) {
       state.weatherQuery = action.payload;
     },
+    //Sets the stocks page.
     setStocksPage(state, action: PayloadAction<number>) {
       state.stocksPage = action.payload;
     },
+    //Sets the stocks limit.
     setStocksLimit(state, action: PayloadAction<number>) {
       state.stocksLimit = action.payload;
     },
+    //Sets the stocks query.
     setStocksQuery(state, action: PayloadAction<string>) {
       state.stocksQuery = action.payload;
       state.stocksPage = 1;
     },
 
+    //Sets the user search query.
     setUserSearchQuery(state, action: PayloadAction<string>) {
       state.userSearchQuery = action.payload;
       // A new search starts from page 1 and drops any drill-down.
@@ -67,26 +72,32 @@ const filtersSlice = createSlice({
       state.selectedUserId = null;
       state.selectedPostId = null;
     },
+    //Sets the users page.
     setUsersPage(state, action: PayloadAction<number>) {
       state.usersPage = action.payload;
     },
+    //Sets the users limit.
     setUsersLimit(state, action: PayloadAction<number>) {
       state.usersLimit = action.payload;
       state.usersPage = 1;
     },
+    //Selects the user.
     selectUser(state, action: PayloadAction<number | null>) {
       state.selectedUserId = action.payload;
       // Changing the user invalidates the post selection.
       state.selectedPostId = null;
     },
+    //Selects the post.
     selectPost(state, action: PayloadAction<number | null>) {
       state.selectedPostId = action.payload;
     },
 
+    //Resets the filters.
     resetFilters() {
       return INITIAL_FILTERS;
     },
   },
+  //Resets the filters when the user logs out.
   extraReducers: (builder) => {
     builder.addCase(logout, () => INITIAL_FILTERS);
   },

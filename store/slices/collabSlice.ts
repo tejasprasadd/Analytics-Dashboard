@@ -18,10 +18,12 @@ const collabSlice = createSlice({
   name: "collab",
   initialState,
   reducers: {
+    //Adds a new collaboration event.
     addCollabEvent(state, action: PayloadAction<CollabEvent>) {
       state.events.unshift(action.payload);
       if (state.events.length > MAX_EVENTS) state.events.length = MAX_EVENTS;
     },
+    //Clears the collaboration events.
     clearEvents() {
       return initialState;
     },
