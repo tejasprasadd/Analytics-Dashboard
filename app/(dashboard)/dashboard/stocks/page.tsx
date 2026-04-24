@@ -106,6 +106,10 @@ export default function StocksPage() {
             </Button>
           </div>
         </div>
+        <p className="mt-3 text-sm text-muted-foreground">
+          The data you get is a snapshot taken on 28th Dec 2023 &amp; not live from stock
+          exchange.
+        </p>
       </div>
 
       {q.isLoading ? (
