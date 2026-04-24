@@ -17,6 +17,7 @@ export function useCommentsByPosts(postIds: number[] | null | undefined) {
   });
 
   const map: Record<number, DummyJsonCommentsResponse | undefined> = {};
+  //Maps the post ids to the comments.
   for (let i = 0; i < ids.length; i++) {
     const postId = ids[i];
     const q = queries[i];
