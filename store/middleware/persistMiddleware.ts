@@ -1,7 +1,7 @@
 import type { Middleware } from "@reduxjs/toolkit";
 
 import { PERSIST_KEYS } from "@/lib/persist/keys";
-import { safeSet, setStoredAuthToken, setStoredAuthUser } from "@/lib/persist/storage";
+import { safeRemove, safeSet, setStoredAuthToken, setStoredAuthUser } from "@/lib/persist/storage";
 import { clearCookie, setCookie } from "@/lib/persist/cookie";
 import type { RootState } from "@/store";
 
@@ -41,6 +41,7 @@ export const persistMiddleware: Middleware =
         setStoredAuthToken(null);
         setStoredAuthUser(null);
         clearCookie(AUTH_COOKIE_NAME, { path: "/" });
+        safeRemove(PERSIST_KEYS.filters);
         break;
       }
       case "theme/setTheme":

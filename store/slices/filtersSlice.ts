@@ -1,5 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+import { logout } from "@/store/slices/authSlice";
+
 /**
  * Filters slice drives all read-only data fetching across the dashboard.
  *
@@ -84,6 +86,9 @@ const filtersSlice = createSlice({
     resetFilters() {
       return INITIAL_FILTERS;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout, () => INITIAL_FILTERS);
   },
 });
 
