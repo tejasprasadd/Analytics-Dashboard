@@ -48,7 +48,7 @@ export default function WeatherPage() {
           <div>
             <div className="text-sm font-semibold">Weather</div>
             <div className="mt-1 text-sm text-muted-foreground">
-              Polls real WeatherAPI current conditions from the WeatherAPI.
+              Polls real Weathercurrent conditions from the WeatherAPI.
             </div>
           </div>
 
