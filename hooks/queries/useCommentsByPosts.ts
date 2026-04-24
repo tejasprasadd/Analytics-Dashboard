@@ -24,6 +24,7 @@ export function useCommentsByPosts(postIds: number[] | null | undefined) {
     map[postId] = q?.data;
   }
 
+  //Returns the queries, the comments by post id, the loading state, and the error state.
   return {
     queries,
     byPostId: map,
